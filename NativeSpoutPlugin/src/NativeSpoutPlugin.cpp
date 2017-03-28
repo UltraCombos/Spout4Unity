@@ -245,6 +245,15 @@ int getIndexForSenderName(char * senderName)
 }
 
 
+namespace
+{
+	template < class T>
+	inline int int_cast(T t)
+	{
+		return static_cast<int>(reinterpret_cast<intptr_t>(t));
+	}
+}
+
 //declaration
 //extern "C" bool EXPORT_API updateSender(char * senderName, void * texturePointer);
 
@@ -260,7 +269,7 @@ extern "C" bool EXPORT_API createSender(char * senderName, void * texturePointer
 		return false;
 	}
 
-	printf("Check TexturePointer : %i\n",texturePointer);
+	printf("Check TexturePointer : %i\n", int_cast(texturePointer));
 
 	if(texturePointer == nullptr) 
 	{
@@ -416,7 +425,7 @@ extern "C" bool EXPORT_API updateSender(char* senderName, void * texturePointer)
 		// Activate the shared context for draw
 		if(!wglMakeCurrent(m_hdc, m_hSharedRC)) {
 			bOpenGL = false;
-			printf("############################### Draw - no context - hdc = %x, ctx = %x\n", m_hdc, m_hSharedRC);
+			printf("############################### Draw - no context - hdc = %x, ctx = %x\n", int_cast(m_hdc), int_cast(m_hSharedRC));
 			// It will start again if the start button is toggled
 			return false;
 		}
@@ -524,7 +533,7 @@ extern "C" void EXPORT_API closeSender(char * senderName)
 		}
 	}
 
-	printf("There are now %i senders remaining\n",numActiveSenders,activeNames.size());
+	printf("There are now %i senders remaining\n",numActiveSenders);
 	
 }
 
